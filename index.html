@@ -12,9 +12,11 @@
             --primary-green: #4CAF50;
             --light-green: #E8F5E9;
             --medium-green: #81C784;
+            --dark-green: #388E3C;
             --white: #ffffff;
             --text-dark: #333333;
             --text-light: #666666;
+            --bg-gray: #f9f9f9;
         }
 
         * {
@@ -23,6 +25,8 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--white);
@@ -62,7 +66,7 @@
         /* --- Navigation Bar --- */
         header {
             background-color: var(--white);
-            padding: 15px 5%;
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -73,8 +77,7 @@
         }
 
         .logo-container img {
-            /* Big and easy to see */
-            max-height: 120px; 
+            max-height: 100px; /* Big and easy to see */
             width: auto;
         }
 
@@ -99,14 +102,15 @@
         .hamburger {
             display: none;
             cursor: pointer;
-            font-size: 28px;
+            font-size: 32px;
             color: var(--primary-green);
+            user-select: none;
         }
 
-        /* --- Hero Section --- */
+        /* --- Main Hero Section --- */
         .hero {
             height: 80vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80') center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80') center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -116,17 +120,8 @@
             padding: 0 20px;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            max-width: 600px;
-        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 15px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 25px; max-width: 600px; }
 
         .btn {
             padding: 12px 30px;
@@ -136,55 +131,55 @@
             font-size: 1.1rem;
             font-weight: bold;
             border-radius: 30px;
-            transition: background 0.3s;
+            border: 2px solid var(--primary-green);
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .btn:hover {
-            background-color: var(--medium-green);
-        }
+        .btn:hover { background-color: var(--dark-green); border-color: var(--dark-green); }
+        .btn-outline { background-color: transparent; color: var(--primary-green); }
+        .btn-outline:hover { background-color: var(--primary-green); color: var(--white); }
 
         /* --- Sections General --- */
-        section {
-            padding: 80px 5%;
-        }
+        section { padding: 80px 5%; }
+        .section-title { text-align: center; font-size: 2.5rem; color: var(--primary-green); margin-bottom: 40px; }
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-green);
-            margin-bottom: 40px;
-        }
-
-        /* --- Our Safaris (Gallery) --- */
-        .gallery-container {
-            background-color: var(--light-green);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
+        /* --- Second Hero (Image Slider) --- */
+        .slider-section {
+            padding: 0;
+            height: 60vh;
             position: relative;
             overflow: hidden;
+            background-color: var(--dark-green);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Smooth transition */
+        }
+        .slide.active { opacity: 1; }
+
+        .slider-content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            color: var(--white);
+            background: rgba(0,0,0,0.5);
+            padding: 20px 40px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 80%;
         }
-
-        .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
+        .slider-content h2 { font-size: 2.5rem; }
 
         /* --- Itineraries --- */
+        .itineraries-container { background-color: var(--bg-gray); }
         .itinerary-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -193,92 +188,105 @@
 
         .itinerary-card {
             background: var(--white);
-            border: 1px solid var(--light-green);
             border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
-        .itinerary-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-green);
+        .itinerary-card:hover { transform: translateY(-10px); }
+        .itinerary-card img { width: 100%; height: 200px; object-fit: cover; }
+        
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-content h3 { color: var(--primary-green); font-size: 1.4rem; margin-bottom: 10px; }
+        .card-content p { color: var(--text-light); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+        
+        .card-actions { display: flex; gap: 10px; }
+        .card-actions button { flex: 1; padding: 10px 0; font-size: 1rem; border-radius: 5px; }
+
+        /* --- Modals (UI for Details and Booking) --- */
+        .modal {
+            display: none; 
+            position: fixed; z-index: 2000; left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center; align-items: center;
         }
 
-        .itinerary-card h3 {
-            color: var(--primary-green);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%; max-width: 600px;
+            max-height: 85vh; overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideDown 0.4s ease;
         }
 
-        .itinerary-card p {
-            color: var(--text-light);
-            margin-bottom: 10px;
-            line-height: 1.6;
+        @keyframes slideDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .itinerary-card ul {
-            list-style-type: none;
-            margin-top: 15px;
+        .close-btn {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 30px; font-weight: bold;
+            color: var(--text-light); cursor: pointer;
         }
+        .close-btn:hover { color: var(--primary-green); }
 
-        .itinerary-card ul li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 0.95rem;
-        }
+        /* Modal specific styling */
+        #details-body ul { list-style: none; margin-top: 15px; }
+        #details-body ul li { background: var(--light-green); padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 5px solid var(--primary-green); }
+        #details-body ul li strong { display: block; color: var(--primary-green); margin-bottom: 5px; }
 
-        .itinerary-card ul li::before {
-            content: '🌿';
-            margin-right: 10px;
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; color: var(--text-dark); }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 10px; border: 1px solid #ccc;
+            border-radius: 5px; font-size: 1rem; outline: none;
         }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary-green); }
+
+        .whatsapp-btn {
+            background-color: #25D366; border-color: #25D366; width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .whatsapp-btn:hover { background-color: #1EBE55; border-color: #1EBE55; }
 
         /* --- Footer --- */
         footer {
-            background-color: var(--primary-green);
-            color: var(--white);
-            text-align: center;
-            padding: 40px 5%;
+            background-color: var(--primary-green); color: var(--white);
+            text-align: center; padding: 40px 5%;
         }
-
-        .footer-info h2 {
-            margin-bottom: 15px;
-        }
-
-        .footer-info p {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
+        .footer-info h2 { margin-bottom: 15px; }
+        .footer-info p { font-size: 1.1rem; margin-bottom: 10px; }
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1rem; }
-            .logo-container img { max-height: 80px; }
+            .logo-container img { max-height: 70px; }
+            .slider-content h2 { font-size: 1.8rem; }
             
             .hamburger { display: block; }
 
             .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 250px;
+                position: fixed; top: 0; right: -100%;
+                height: 100vh; width: 250px;
                 background-color: var(--white);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
+                flex-direction: column; align-items: center; justify-content: center;
                 transition: right 0.3s ease;
                 box-shadow: -5px 0 10px rgba(0,0,0,0.1);
             }
 
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-links li {
-                margin: 20px 0;
-            }
+            .nav-links.active { right: 0; }
+            .nav-links li { margin: 20px 0; }
+            .card-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -292,92 +300,173 @@
     <!-- Navigation Header -->
     <header>
         <div class="logo-container">
-            <!-- Linked to your requested source -->
             <a href="#">
                 <img src="images/logo.png" alt="Richivana Tours and Safari Adventures Logo">
             </a>
         </div>
         <nav>
-            <div class="hamburger" id="hamburger">
-                ☰
-            </div>
+            <div class="hamburger" id="hamburger">☰</div>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#safaris">Our Safaris</a></li>
-                <li><a href="#itinerary">Itineraries</a></li>
+                <li><a href="#slider">Moments</a></li>
+                <li><a href="#itineraries">Itineraries</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Main Hero Section -->
     <section class="hero" id="home">
         <h1>Welcome to Richivana Tours</h1>
         <p>Experience the ultimate Safari Adventures right from the heart of Dar es salaam, Tanzania.</p>
-        <a href="#contact" class="btn">Book Your Adventure</a>
+        <a href="#itineraries" class="btn">Explore Safaris</a>
     </section>
 
-    <!-- Our Safaris Image Gallery -->
-    <section class="gallery-container" id="safaris">
-        <h2 class="section-title">Our Safaris</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?auto=format&fit=crop&w=800&q=80" alt="Lion Safari">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1547471080-7fc2caa7df68?auto=format&fit=crop&w=800&q=80" alt="Giraffe">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1521651201144-634f700b36ef?auto=format&fit=crop&w=800&q=80" alt="Zebra Herd">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=800&q=80" alt="Leopard Resting">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=800&q=80" alt="Safari Jeep">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1535083252446-4d1f2b6e1ee7?auto=format&fit=crop&w=800&q=80" alt="Rhino">
-            </div>
+    <!-- Second Hero (Automatic Image Slider) -->
+    <section class="slider-section" id="slider">
+        <div class="slider-content">
+            <h2>Breathtaking Safari Moments</h2>
+            <p>Witness nature in its purest form.</p>
         </div>
+        <!-- Slider Images -->
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1547471080-7fc2caa7df68?auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519066629447-267fffa62d4b?auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1521651201144-634f700b36ef?auto=format&fit=crop&w=1920&q=80');"></div>
     </section>
 
-    <!-- Itinerary Section -->
-    <section id="itinerary">
-        <h2 class="section-title">Sample Itineraries</h2>
+    <!-- Itineraries Section -->
+    <section class="itineraries-container" id="itineraries">
+        <h2 class="section-title">Our Top Safari Packages</h2>
         <div class="itinerary-grid">
-            <!-- Itinerary 1 -->
+            
+            <!-- Package 1 -->
             <div class="itinerary-card">
-                <h3>3-Day Serengeti Experience</h3>
-                <p>A quick but fulfilling dive into the vast plains of the Serengeti, witnessing the greatest wildlife spectacles on earth.</p>
-                <ul>
-                    <li><strong>Day 1:</strong> Drive from Arusha to Serengeti. Afternoon game drive.</li>
-                    <li><strong>Day 2:</strong> Full day exploring the Serengeti plains.</li>
-                    <li><strong>Day 3:</strong> Morning game drive and return to base.</li>
-                </ul>
+                <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?auto=format&fit=crop&w=800&q=80" alt="Serengeti">
+                <div class="card-content">
+                    <h3>3-Day Serengeti Experience</h3>
+                    <p>A quick but fulfilling dive into the vast plains of the Serengeti, witnessing the greatest wildlife spectacles on earth.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openDetails('Serengeti Experience', 'serengeti-days')">View</button>
+                        <button class="btn" onclick="openBooking('3-Day Serengeti Experience')">Book Now</button>
+                    </div>
+                </div>
+                <!-- Hidden Days Data -->
+                <div id="serengeti-days" style="display:none;">
+                    <ul>
+                        <li><strong>Day 1: Arusha to Serengeti</strong> Drive to Serengeti. Afternoon game drive. Dinner and overnight at camp.</li>
+                        <li><strong>Day 2: Full Day Serengeti</strong> Exploring the endless plains tracking big cats and the migration.</li>
+                        <li><strong>Day 3: Serengeti to Arusha</strong> Morning game drive, followed by a scenic drive back to base.</li>
+                    </ul>
+                </div>
             </div>
-            <!-- Itinerary 2 -->
+
+            <!-- Package 2 -->
             <div class="itinerary-card">
-                <h3>5-Day Ngorongoro & Tarangire</h3>
-                <p>Explore the elephant-rich landscapes of Tarangire and the breathtaking wonder of the Ngorongoro Crater.</p>
-                <ul>
-                    <li><strong>Day 1:</strong> Arrival and transfer to Tarangire.</li>
-                    <li><strong>Day 2:</strong> Full day Tarangire National Park.</li>
-                    <li><strong>Day 3:</strong> Transit to Ngorongoro Conservation Area.</li>
-                    <li><strong>Day 4:</strong> Ngorongoro Crater descent.</li>
-                    <li><strong>Day 5:</strong> Return to Dar es salaam.</li>
-                </ul>
+                <img src="https://images.unsplash.com/photo-1535083252446-4d1f2b6e1ee7?auto=format&fit=crop&w=800&q=80" alt="Ngorongoro">
+                <div class="card-content">
+                    <h3>5-Day Tarangire & Ngorongoro</h3>
+                    <p>Explore the elephant-rich landscapes of Tarangire and the breathtaking wonder of the Ngorongoro Crater.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openDetails('Tarangire & Ngorongoro', 'tarangire-days')">View</button>
+                        <button class="btn" onclick="openBooking('5-Day Tarangire & Ngorongoro')">Book Now</button>
+                    </div>
+                </div>
+                <div id="tarangire-days" style="display:none;">
+                    <ul>
+                        <li><strong>Day 1: Arrival</strong> Transfer from airport to Tarangire lodge.</li>
+                        <li><strong>Day 2: Tarangire National Park</strong> Full day game drive famous for giant baobab trees and elephants.</li>
+                        <li><strong>Day 3: Transit</strong> Drive to Ngorongoro Conservation Area. Rest at crater rim.</li>
+                        <li><strong>Day 4: Ngorongoro Crater</strong> Full day descent into the crater to spot the Big Five.</li>
+                        <li><strong>Day 5: Departure</strong> Morning relaxation and return to Dar es salaam.</li>
+                    </ul>
+                </div>
             </div>
-            <!-- Itinerary 3 -->
+
+            <!-- Package 3 -->
             <div class="itinerary-card">
-                <h3>Southern Circuit Getaway</h3>
-                <p>Departing directly from Dar es salaam, experience the untouched wilderness of Nyerere National Park (Selous).</p>
-                <ul>
-                    <li><strong>Day 1:</strong> Drive from Dar to Nyerere NP. Boat safari.</li>
-                    <li><strong>Day 2:</strong> Full day walking and driving safari.</li>
-                    <li><strong>Day 3:</strong> Morning game drive and return to Dar es salaam.</li>
-                </ul>
+                <img src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80" alt="Selous">
+                <div class="card-content">
+                    <h3>4-Day Nyerere (Selous) Circuit</h3>
+                    <p>Departing directly from Dar es salaam, experience the untouched wilderness of Nyerere National Park.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openDetails('Nyerere (Selous) Circuit', 'selous-days')">View</button>
+                        <button class="btn" onclick="openBooking('4-Day Nyerere (Selous) Circuit')">Book Now</button>
+                    </div>
+                </div>
+                <div id="selous-days" style="display:none;">
+                    <ul>
+                        <li><strong>Day 1: Dar es salaam to Nyerere</strong> Drive from Dar. Evening sunset boat safari on Rufiji River.</li>
+                        <li><strong>Day 2: Full Day Game Drive</strong> Extensive exploration of the largest reserve in Africa.</li>
+                        <li><strong>Day 3: Walking Safari</strong> Guided morning walking safari. Afternoon game drive.</li>
+                        <li><strong>Day 4: Return</strong> Final morning view and drive back to Dar es salaam.</li>
+                    </ul>
+                </div>
             </div>
+
+            <!-- Package 4 -->
+            <div class="itinerary-card">
+                <img src="https://images.unsplash.com/photo-1549643276-fdf2fab574f5?auto=format&fit=crop&w=800&q=80" alt="Mikumi">
+                <div class="card-content">
+                    <h3>2-Day Mikumi Getaway</h3>
+                    <p>The perfect quick escape from Dar es salaam to witness lions, giraffes, zebras, and elephants over the weekend.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openDetails('Mikumi Weekend Getaway', 'mikumi-days')">View</button>
+                        <button class="btn" onclick="openBooking('2-Day Mikumi Getaway')">Book Now</button>
+                    </div>
+                </div>
+                <div id="mikumi-days" style="display:none;">
+                    <ul>
+                        <li><strong>Day 1: Travel & Evening Safari</strong> Early morning drive from Dar. Arrive for a late afternoon game drive.</li>
+                        <li><strong>Day 2: Morning Safari & Return</strong> Sunrise game drive, breakfast, and transit back to Dar es salaam.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Package 5 -->
+            <div class="itinerary-card">
+                <img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=800&q=80" alt="Zanzibar">
+                <div class="card-content">
+                    <h3>8-Day Bush & Beach Combo</h3>
+                    <p>Combine the thrill of the Tanzanian wildlife safari with the relaxing white sandy beaches of Zanzibar.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openDetails('Bush & Beach Combo', 'zanzibar-days')">View</button>
+                        <button class="btn" onclick="openBooking('8-Day Bush & Beach Combo')">Book Now</button>
+                    </div>
+                </div>
+                <div id="zanzibar-days" style="display:none;">
+                    <ul>
+                        <li><strong>Days 1-4: Northern Safari</strong> Exploring Tarangire, Ngorongoro, and Serengeti.</li>
+                        <li><strong>Day 5: Flight to Zanzibar</strong> Transfer from bush strip to Zanzibar island.</li>
+                        <li><strong>Days 6-7: Beach Relaxation</strong> Enjoying the beaches, Stone Town tour, and spice farms.</li>
+                        <li><strong>Day 8: Departure</strong> Transfer to airport for flight home.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Package 6 -->
+            <div class="itinerary-card">
+                <img src="https://images.unsplash.com/photo-1629837042502-d3b2075558e6?auto=format&fit=crop&w=800&q=80" alt="Kilimanjaro">
+                <div class="card-content">
+                    <h3>6-Day Kilimanjaro Trek</h3>
+                    <p>Conquer the roof of Africa via the beautiful Machame route. An adventure of a lifetime.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openDetails('Kilimanjaro Trek', 'kili-days')">View</button>
+                        <button class="btn" onclick="openBooking('6-Day Kilimanjaro Trek')">Book Now</button>
+                    </div>
+                </div>
+                <div id="kili-days" style="display:none;">
+                    <ul>
+                        <li><strong>Day 1: Machame Gate to Machame Camp</strong> Trek through dense rainforest.</li>
+                        <li><strong>Day 2: Machame to Shira Camp</strong> Moorland zone hike with great views.</li>
+                        <li><strong>Day 3: Shira to Barranco Camp</strong> Acclimatization day passing the Lava Tower.</li>
+                        <li><strong>Day 4: Barranco to Barafu Camp</strong> Climbing the Barranco Wall and reaching base camp.</li>
+                        <li><strong>Day 5: Summit Day!</strong> Midnight trek to Uhuru Peak, descend to Mweka Camp.</li>
+                        <li><strong>Day 6: Mweka to Gate</strong> Final descent and certification.</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -392,36 +481,146 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- ================= MODALS ================= -->
+    
+    <!-- Details Modal -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('details-modal')">&times;</span>
+            <h2 id="details-title" style="color: var(--primary-green); margin-bottom: 10px;"></h2>
+            <div id="details-body"></div>
+        </div>
+    </div>
+
+    <!-- Booking Form Modal -->
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('booking-modal')">&times;</span>
+            <h2 style="color: var(--primary-green); margin-bottom: 20px;">Book Your Safari</h2>
+            
+            <form id="booking-form" onsubmit="sendWhatsApp(event)">
+                <div class="form-group">
+                    <label>Selected Safari:</label>
+                    <input type="text" id="b-safari" readonly style="background: var(--light-green); font-weight: bold;">
+                </div>
+                <div class="form-group">
+                    <label>Full Name:</label>
+                    <input type="text" id="b-name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Dates:</label>
+                    <input type="date" id="b-dates" required>
+                </div>
+                <div class="form-group">
+                    <label>Number of Travelers:</label>
+                    <input type="number" id="b-pax" min="1" required placeholder="E.g. 2">
+                </div>
+                <div class="form-group">
+                    <label>Special Requests / Notes:</label>
+                    <textarea id="b-notes" rows="3" placeholder="Any dietary requirements or special requests..."></textarea>
+                </div>
+                <button type="submit" class="btn whatsapp-btn">
+                    <!-- WhatsApp Icon SVG -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.3 5.3 0 0 0-.571-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c0-5.445 4.433-9.879 9.885-9.879 2.64 0 5.12 1.028 6.985 2.895A9.83 9.83 0 0 1 21.93 12c0 5.444-4.433 9.878-9.879 9.878v.007zM12.051 0C5.405 0 0 5.405 0 12.051c0 2.122.553 4.193 1.603 6.012L.15 24l6.082-1.597A11.96 11.96 0 0 0 12.05 24c6.645 0 12.05-5.405 12.05-12.051C24.1 5.405 18.696 0 12.051 0z"/>
+                    </svg>
+                    Book via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
     <script>
         // 1. Loading Screen Logic
         window.addEventListener('load', function() {
             const loader = document.getElementById('loader-wrapper');
-            // Adding a slight delay so the user can enjoy the loading effect 
             setTimeout(() => {
                 loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500); // Wait for fade out
+                setTimeout(() => { loader.style.display = 'none'; }, 500);
             }, 800);
         });
 
-        // 2. Mobile Menu Toggle Logic
+        // 2. Mobile Menu Toggle Logic (Fixed)
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
         const links = document.querySelectorAll('.nav-links li a');
 
-        // Open/Close menu
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            // Change icon to X when open
+            if(navLinks.classList.contains('active')) {
+                hamburger.innerHTML = '✕';
+            } else {
+                hamburger.innerHTML = '☰';
+            }
         });
 
-        // Close menu when a link is clicked (mobile)
+        // Close menu when link is clicked
         links.forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
+                hamburger.innerHTML = '☰';
             });
         });
+
+        // 3. Second Hero Image Slider (2 seconds effect)
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 2000); // Changes every 2 seconds
+
+        // 4. Modals Logic
+        function openDetails(title, dataId) {
+            document.getElementById('details-title').innerText = title;
+            document.getElementById('details-body').innerHTML = document.getElementById(dataId).innerHTML;
+            document.getElementById('details-modal').style.display = 'flex';
+        }
+
+        function openBooking(safariName) {
+            document.getElementById('b-safari').value = safariName;
+            document.getElementById('booking-modal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside content
+        window.onclick = function(event) {
+            const detailsModal = document.getElementById('details-modal');
+            const bookingModal = document.getElementById('booking-modal');
+            if (event.target == detailsModal) { detailsModal.style.display = "none"; }
+            if (event.target == bookingModal) { bookingModal.style.display = "none"; }
+        }
+
+        // 5. WhatsApp Form Submission
+        function sendWhatsApp(event) {
+            event.preventDefault(); // Prevent page reload
+            
+            const safari = document.getElementById('b-safari').value;
+            const name = document.getElementById('b-name').value;
+            const dates = document.getElementById('b-dates').value;
+            const pax = document.getElementById('b-pax').value;
+            const notes = document.getElementById('b-notes').value;
+
+            // Formulate the WhatsApp message
+            const message = `*NEW BOOKING INQUIRY*%0A%0A*Safari:* ${safari}%0A*Name:* ${name}%0A*Dates:* ${dates}%0A*Travelers:* ${pax}%0A*Notes:* ${notes}%0A%0AHello Richivana Tours, I would like to book this safari!`;
+
+            // WhatsApp Number: +255 769 493 096 (Format: 255769493096)
+            const whatsappURL = `https://wa.me/255769493096?text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+            
+            // Close modal & reset form
+            closeModal('booking-modal');
+            document.getElementById('booking-form').reset();
+        }
     </script>
 </body>
 </html>
