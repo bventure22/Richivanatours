@@ -121,19 +121,18 @@
       overflow: hidden;
     }
 
+    /* Hero slideshow: 4 images cycling every ~6s each */
     .hero-bg {
       position: absolute; inset: 0;
-      background:
-        linear-gradient(160deg, rgba(3,12,6,0.72) 0%, rgba(26,58,74,0.55) 60%, rgba(3,12,6,0.80) 100%),
-        url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/1280px-Ngorongoro_Crater%2C_Tanzania.jpg') center/cover no-repeat;
-      transform: scale(1.04);
-      animation: heroZoom 18s ease-in-out infinite alternate;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    @keyframes heroZoom {
-      from { transform: scale(1.04); }
-      to   { transform: scale(1.10); }
-    }
+    /* JS drives the slideshow — initial image set inline */
+    @keyframes heroZoomIn  { from { transform: scale(1.04); } to { transform: scale(1.10); } }
+    @keyframes heroZoomOut { from { transform: scale(1.10); } to { transform: scale(1.04); } }
+    .hero-bg { animation: heroZoomIn 6s ease-in-out infinite alternate; }
 
     /* Diagonal gold stripe */
     .hero::after {
@@ -812,7 +811,7 @@
     #cta {
       background:
         linear-gradient(rgba(3,12,6,0.78), rgba(3,12,6,0.78)),
-        url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Clouds_on_Kilimanjaro.jpg/1280px-Above_Clouds_on_Kilimanjaro.jpg') center/cover no-repeat fixed;
+        url('images/kilimanjaro.jpg') center/cover no-repeat fixed;
       text-align: center;
       padding: 120px 8vw;
     }
@@ -853,6 +852,244 @@
     }
 
     .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+
+    /* ─── BOOKING FORM ─── */
+    #booking {
+      background: var(--earth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #booking::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CAF72' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .booking-inner {
+      position: relative; z-index: 1;
+    }
+
+    .booking-header { text-align: center; margin-bottom: 52px; }
+    .booking-header .section-title  { color: var(--savanna); }
+    .booking-header .section-title em { color: var(--gold-lt); }
+    .booking-header .section-desc {
+      text-align: center; max-width: 540px; margin: 0 auto;
+      color: rgba(214,240,223,0.6);
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .booking-info { }
+
+    .booking-info-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .binfo-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: rgba(76,175,114,0.12);
+      border: 1px solid rgba(76,175,114,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .binfo-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold-lt);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .binfo-text {
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: rgba(214,240,223,0.55);
+    }
+
+    .booking-divider {
+      width: 1px;
+      background: rgba(76,175,114,0.15);
+      margin: 0 8px;
+    }
+
+    /* Form card */
+    .booking-form-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(76,175,114,0.2);
+      border-radius: 6px;
+      padding: 42px 40px;
+      backdrop-filter: blur(8px);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .form-group {
+      display: flex; flex-direction: column; gap: 7px;
+      margin-bottom: 18px;
+    }
+
+    .form-group.full { grid-column: span 2; }
+
+    .form-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+    }
+
+    .form-label span { color: #e74c3c; margin-left: 2px; }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(76,175,114,0.25);
+      border-radius: 3px;
+      padding: 13px 16px;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 0.85rem;
+      color: var(--savanna);
+      outline: none;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+      width: 100%;
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: rgba(214,240,223,0.3);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--gold);
+      background: rgba(76,175,114,0.08);
+      box-shadow: 0 0 0 3px rgba(76,175,114,0.12);
+    }
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234CAF72' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+    }
+
+    .form-select option {
+      background: #1B3A2D;
+      color: var(--savanna);
+    }
+
+    .form-textarea { resize: vertical; min-height: 110px; }
+
+    .form-checkbox-group {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .form-checkbox {
+      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .form-checkbox-label {
+      font-size: 0.78rem;
+      color: rgba(214,240,223,0.55);
+      line-height: 1.6;
+    }
+
+    .form-checkbox-label a {
+      color: var(--gold-lt);
+      text-decoration: underline;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--earth);
+      border: none;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 17px 32px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 24px rgba(76,175,114,0.3);
+    }
+
+    .form-submit:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(76,175,114,0.45);
+    }
+
+    .form-submit:active { transform: translateY(0); }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 32px 20px;
+    }
+
+    .form-success.visible { display: block; }
+
+    .success-icon {
+      font-size: 3rem; margin-bottom: 14px; display: block;
+      animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .success-title {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold-lt);
+      margin-bottom: 10px;
+    }
+
+    .success-text {
+      font-size: 0.88rem;
+      color: rgba(214,240,223,0.65);
+      line-height: 1.7;
+    }
+
+    /* Responsive booking */
+    @media (max-width: 900px) {
+      .booking-grid { grid-template-columns: 1fr; }
+      .booking-divider { display: none; }
+      .booking-form-card { padding: 28px 22px; }
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+    }
 
     /* ─── FOOTER ─── */
     footer {
@@ -1053,7 +1290,7 @@
   <a href="#" class="nav-logo">
     <img
       src="images/logo.png"
-      onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/200px-Ngorongoro_Crater%2C_Tanzania.jpg'"
+      
       alt="Richivana Logo"
       class="nav-logo-img"
     />
@@ -1067,6 +1304,7 @@
     <li><a href="#destinations">Destinations</a></li>
     <li><a href="#tours">Safari Tours</a></li>
     <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#booking">Book</a></li>
     <li><a href="#cta" class="nav-cta">Book Now</a></li>
   </ul>
 </nav>
@@ -1114,12 +1352,12 @@
 <section id="about">
   <div class="about-img-stack">
     <img
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/800px-Ngorongoro_Crater%2C_Tanzania.jpg"
+      src="images/ngorongoro crater.jpeg"
       alt="Ngorongoro Crater Tanzania"
       class="about-img-main"
     />
     <img
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Clouds_on_Kilimanjaro.jpg/640px-Above_Clouds_on_Kilimanjaro.jpg"
+      src="images/kilimanjaro.jpg"
       alt="Kilimanjaro Summit"
       class="about-img-accent"
     />
@@ -1196,8 +1434,8 @@
   <div class="dest-grid">
     <div class="dest-card">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Lionfish_Serengeti.jpg/800px-Lionfish_Serengeti.jpg"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/800px-Ngorongoro_Crater%2C_Tanzania.jpg'"
+        src="images/serengeti plains.jpeg"
+        
         alt="Serengeti"
       />
       <div class="dest-overlay"></div>
@@ -1210,7 +1448,7 @@
 
     <div class="dest-card">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Clouds_on_Kilimanjaro.jpg/640px-Above_Clouds_on_Kilimanjaro.jpg"
+        src="images/kilimanjaro.jpg"
         alt="Kilimanjaro"
       />
       <div class="dest-overlay"></div>
@@ -1223,7 +1461,7 @@
 
     <div class="dest-card">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/800px-Ngorongoro_Crater%2C_Tanzania.jpg"
+        src="images/ngorongoro crater.jpeg"
         alt="Ngorongoro"
       />
       <div class="dest-overlay"></div>
@@ -1236,8 +1474,8 @@
 
     <div class="dest-card">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Tarangire_National_Park_Tanzania_Elephant.jpg/640px-Tarangire_National_Park_Tanzania_Elephant.jpg"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/400px-Ngorongoro_Crater%2C_Tanzania.jpg'"
+        src="images/Tarangirenationalpark.jpg"
+        
         alt="Tarangire"
       />
       <div class="dest-overlay"></div>
@@ -1265,8 +1503,8 @@
     <div class="tour-card">
       <div class="tour-img-wrap">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Lionfish_Serengeti.jpg/800px-Lionfish_Serengeti.jpg"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/640px-Ngorongoro_Crater%2C_Tanzania.jpg'"
+          src="images/serengeti plains.jpeg"
+          
           alt="Serengeti Classic Safari"
         />
         <div class="tour-badge">Best Seller</div>
@@ -1292,7 +1530,7 @@
     <div class="tour-card">
       <div class="tour-img-wrap">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Clouds_on_Kilimanjaro.jpg/640px-Above_Clouds_on_Kilimanjaro.jpg"
+          src="images/kilimanjaro.jpg"
           alt="Kilimanjaro Trek"
         />
         <div class="tour-badge">Adventure</div>
@@ -1318,7 +1556,7 @@
     <div class="tour-card">
       <div class="tour-img-wrap">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/640px-Ngorongoro_Crater%2C_Tanzania.jpg"
+          src="images/ngorongoro crater.jpeg"
           alt="Big Five Safari"
         />
         <div class="tour-badge">Luxury</div>
@@ -1447,45 +1685,45 @@
   <div class="gallery-grid">
     <div class="gallery-item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/800px-Ngorongoro_Crater%2C_Tanzania.jpg"
+        src="images/ngorongoro crater.jpeg"
         alt="Ngorongoro Crater"
       />
     </div>
     <div class="gallery-item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Clouds_on_Kilimanjaro.jpg/640px-Above_Clouds_on_Kilimanjaro.jpg"
+        src="images/kilimanjaro.jpg"
         alt="Kilimanjaro"
       />
     </div>
     <div class="gallery-item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Tarangire_National_Park_Tanzania_Elephant.jpg/640px-Tarangire_National_Park_Tanzania_Elephant.jpg"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/400px-Ngorongoro_Crater%2C_Tanzania.jpg'"
+        src="images/Tarangirenationalpark.jpg"
+        
         alt="Tarangire Elephants"
       />
     </div>
     <div class="gallery-item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Lionfish_Serengeti.jpg/640px-Lionfish_Serengeti.jpg"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/400px-Ngorongoro_Crater%2C_Tanzania.jpg'"
+        src="images/serengeti plains.jpeg"
+        
         alt="Serengeti Wildlife"
       />
     </div>
     <div class="gallery-item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Clouds_on_Kilimanjaro.jpg/400px-Above_Clouds_on_Kilimanjaro.jpg"
+        src="images/kilimanjaro.jpg"
         alt="Sunrise Tanzania"
       />
     </div>
     <div class="gallery-item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/400px-Ngorongoro_Crater%2C_Tanzania.jpg"
+        src="images/ngorongoro crater.jpeg"
         alt="Tanzania Landscape"
       />
     </div>
     <div class="gallery-item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Clouds_on_Kilimanjaro.jpg/480px-Above_Clouds_on_Kilimanjaro.jpg"
+        src="images/kilimanjaro.jpg"
         alt="Kilimanjaro Trek"
       />
     </div>
@@ -1506,6 +1744,184 @@
   </div>
 </section>
 
+
+<!-- ═══════════════════════ BOOKING FORM ═══════════════════════ -->
+<section id="booking">
+  <div class="booking-inner">
+
+    <div class="booking-header">
+      <span class="section-eyebrow" style="justify-content:center;">Reserve Your Safari</span>
+      <h2 class="section-title">Book Your <em>Dream Safari</em></h2>
+      <div class="gold-divider" style="margin:18px auto;"></div>
+      <p class="section-desc">
+        Fill in the form and one of our Tanzania specialists will reach out within 24 hours
+        to finalise your personalised itinerary.
+      </p>
+    </div>
+
+    <div class="booking-grid">
+
+      <!-- Left info column -->
+      <div class="booking-info">
+        <div class="booking-info-item">
+          <div class="binfo-icon">📅</div>
+          <div>
+            <div class="binfo-title">Flexible Dates</div>
+            <div class="binfo-text">We work around your schedule — year-round departures available for all packages.</div>
+          </div>
+        </div>
+        <div class="booking-info-item">
+          <div class="binfo-icon">🛡️</div>
+          <div>
+            <div class="binfo-title">Free Cancellation</div>
+            <div class="binfo-text">Cancel up to 30 days before departure for a full refund. No questions asked.</div>
+          </div>
+        </div>
+        <div class="booking-info-item">
+          <div class="binfo-icon">💬</div>
+          <div>
+            <div class="binfo-title">Expert Consultation</div>
+            <div class="binfo-text">Our team responds within 24 hours with a tailored quote and itinerary draft.</div>
+          </div>
+        </div>
+        <div class="booking-info-item">
+          <div class="binfo-icon">💳</div>
+          <div>
+            <div class="binfo-title">Secure Payment</div>
+            <div class="binfo-text">10% deposit to confirm. Balance due 60 days before departure. All major cards accepted.</div>
+          </div>
+        </div>
+        <div class="booking-info-item">
+          <div class="binfo-icon">🌍</div>
+          <div>
+            <div class="binfo-title">All-Inclusive Packages</div>
+            <div class="binfo-text">Accommodation, meals, game drives, park fees, and airport transfers — all included.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right form card -->
+      <div class="booking-form-card">
+        <div id="bookingFormWrap">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name <span>*</span></label>
+              <input type="text" class="form-input" id="bFirstName" placeholder="e.g. Sarah" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name <span>*</span></label>
+              <input type="text" class="form-input" id="bLastName" placeholder="e.g. Blackwood" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email Address <span>*</span></label>
+              <input type="email" class="form-input" id="bEmail" placeholder="you@email.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone / WhatsApp <span>*</span></label>
+              <input type="tel" class="form-input" id="bPhone" placeholder="+1 234 567 890" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Country of Origin</label>
+              <input type="text" class="form-input" id="bCountry" placeholder="e.g. United Kingdom" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Number of Travellers <span>*</span></label>
+              <select class="form-select" id="bTravellers">
+                <option value="">Select…</option>
+                <option>1 (Solo)</option>
+                <option>2 (Couple)</option>
+                <option>3–4</option>
+                <option>5–8 (Small Group)</option>
+                <option>9–15 (Group)</option>
+                <option>16+ (Large Group)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Preferred Tour <span>*</span></label>
+              <select class="form-select" id="bTour">
+                <option value="">Choose a package…</option>
+                <option>Serengeti Classic Safari (7 Days)</option>
+                <option>Kilimanjaro Summit Trek (8 Days)</option>
+                <option>Big Five Grand Safari (10 Days)</option>
+                <option>Ngorongoro Crater Day Trip</option>
+                <option>Tarangire & Lake Manyara (4 Days)</option>
+                <option>Zanzibar Beach Extension</option>
+                <option>Custom / Tailor-Made Itinerary</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Accommodation Level</label>
+              <select class="form-select" id="bAccomm">
+                <option value="">Select…</option>
+                <option>Budget (Tented Camps)</option>
+                <option>Mid-Range (Safari Lodges)</option>
+                <option>Luxury (5-Star Camps)</option>
+                <option>Ultra-Luxury (Exclusive)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Preferred Start Date <span>*</span></label>
+              <input type="date" class="form-input" id="bStartDate" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Approximate Budget (USD)</label>
+              <select class="form-select" id="bBudget">
+                <option value="">Select range…</option>
+                <option>Under $1,500</option>
+                <option>$1,500 – $3,000</option>
+                <option>$3,000 – $5,000</option>
+                <option>$5,000 – $10,000</option>
+                <option>$10,000+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Special Requests / Notes</label>
+            <textarea class="form-textarea" id="bNotes" placeholder="Dietary requirements, mobility needs, wildlife wish list, honeymoon, anniversary…"></textarea>
+          </div>
+
+          <div class="form-checkbox-group">
+            <input type="checkbox" class="form-checkbox" id="bConsent" />
+            <label class="form-checkbox-label" for="bConsent">
+              I agree to Richivana's <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.
+              I consent to being contacted by the Richivana team regarding my enquiry.
+            </label>
+          </div>
+
+          <button class="form-submit" onclick="submitBooking()">
+            🌍 &nbsp; Send My Booking Enquiry
+          </button>
+        </div>
+
+        <!-- Success state -->
+        <div class="form-success" id="bookingSuccess">
+          <span class="success-icon">🎉</span>
+          <div class="success-title">Enquiry Sent!</div>
+          <p class="success-text">
+            Thank you! Our safari specialists will review your request and contact you
+            within 24 hours to craft your perfect Tanzania adventure.<br><br>
+            <strong style="color:var(--gold-lt);">Check your inbox — we'll be in touch soon.</strong>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
 <footer>
   <div class="footer-top">
@@ -1513,7 +1929,7 @@
       <div class="footer-logo">
         <img
           src="images/logo.png"
-          onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ngorongoro_Crater%2C_Tanzania.jpg/200px-Ngorongoro_Crater%2C_Tanzania.jpg'"
+          
           alt="Richivana Logo"
           class="footer-logo-img"
         />
@@ -1590,7 +2006,67 @@
 </footer>
 
 <script>
-  // Smooth navbar background on scroll
+  // ─── Hero Slideshow ───────────────────────────────────────────────
+  const heroImages = [
+    'images/ngorongoro crater.jpeg',
+    'images/kilimanjaro.jpg',
+    'images/serengeti plains.jpeg',
+    'images/Tarangirenationalpark.jpg'
+  ];
+  const heroBg = document.querySelector('.hero-bg');
+  const heroOverlay = 'linear-gradient(160deg,rgba(3,12,6,0.72) 0%,rgba(5,25,15,0.55) 60%,rgba(3,12,6,0.82) 100%)';
+  let heroIdx = 0;
+
+  function setHeroImage(idx) {
+    heroBg.style.backgroundImage = heroOverlay + ", url('" + heroImages[idx] + "')";
+    heroBg.style.backgroundSize = 'cover';
+    heroBg.style.backgroundPosition = 'center';
+  }
+
+  setHeroImage(0);
+
+  setInterval(() => {
+    // Fade out
+    heroBg.style.transition = 'opacity 0.9s ease';
+    heroBg.style.opacity = '0';
+    setTimeout(() => {
+      heroIdx = (heroIdx + 1) % heroImages.length;
+      setHeroImage(heroIdx);
+      heroBg.style.opacity = '1';
+    }, 900);
+  }, 6000);
+
+  // ─── Booking Form Submit ───────────────────────────────────────────────
+  function submitBooking() {
+    const required = {
+      'bFirstName': 'First Name',
+      'bLastName':  'Last Name',
+      'bEmail':     'Email Address',
+      'bPhone':     'Phone Number',
+      'bTravellers':'Number of Travellers',
+      'bTour':      'Preferred Tour',
+      'bStartDate': 'Start Date'
+    };
+    for (const [id, label] of Object.entries(required)) {
+      const el = document.getElementById(id);
+      if (!el || !el.value.trim()) {
+        el && el.focus();
+        el && (el.style.borderColor = '#e74c3c');
+        setTimeout(() => el && (el.style.borderColor = ''), 2000);
+        alert('Please fill in: ' + label);
+        return;
+      }
+    }
+    if (!document.getElementById('bConsent').checked) {
+      alert('Please agree to the Privacy Policy and Terms of Service.');
+      return;
+    }
+    document.getElementById('bookingFormWrap').style.display = 'none';
+    document.getElementById('bookingSuccess').classList.add('visible');
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // ─── Smooth navbar background on scroll
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 60) {
